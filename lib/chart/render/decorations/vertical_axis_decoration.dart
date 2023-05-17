@@ -31,6 +31,7 @@ class VerticalAxisDecoration extends DecorationPainter {
     this.textScale = 1.0,
     this.legendPosition = VerticalLegendPosition.bottom,
     this.legendFontStyle = const TextStyle(fontSize: 13.0),
+    this.maxLines = 1,
   })  : assert(axisStep > 0, 'axisStep must be greater than zero!'),
         _endWithChart = endWithChart ? 1.0 : 0.0;
 
@@ -48,6 +49,7 @@ class VerticalAxisDecoration extends DecorationPainter {
     this.textScale = 1.0,
     this.legendPosition = VerticalLegendPosition.bottom,
     this.legendFontStyle = const TextStyle(fontSize: 13.0),
+    this.maxLines = 1,
   }) : _endWithChart = endWithChart;
 
   /// This decoration can continue beyond padding set by [ChartState]
@@ -94,6 +96,8 @@ class VerticalAxisDecoration extends DecorationPainter {
 
   /// Generate vertical axis legend from index steps
   final AxisValueFromIndex valueFromIndex;
+
+  final int maxLines;
 
   @override
   Size layoutSize(BoxConstraints constraints, ChartState state) {
@@ -157,7 +161,7 @@ class VerticalAxisDecoration extends DecorationPainter {
           style: legendFontStyle,
         ),
         textAlign: valuesAlign,
-        maxLines: 1,
+        maxLines: maxLines,
         textDirection: TextDirection.ltr,
       )..layout(
           maxWidth: _itemWidth,
@@ -202,7 +206,7 @@ class VerticalAxisDecoration extends DecorationPainter {
   double _textHeight(String? text, TextStyle? style) {
     final textPainter = TextPainter(
         text: TextSpan(text: text, style: style),
-        maxLines: 1,
+        maxLines: maxLines,
         textScaleFactor: textScale,
         textDirection: TextDirection.ltr)
       ..layout();
